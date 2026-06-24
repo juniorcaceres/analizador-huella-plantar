@@ -1,65 +1,67 @@
-import Image from "next/image";
+import AnalizadorHuella from "@/components/AnalizadorHuella";
 
+// Página principal (ruta "/"). Es un Server Component: arma la estructura
+// visual y monta adentro el componente interactivo AnalizadorHuella.
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+    <div className="flex min-h-screen flex-col bg-slate-50">
+      {/* --- Encabezado fijo arriba --- */}
+      <header className="sticky top-0 z-10 border-b border-slate-200 bg-white/80 backdrop-blur">
+        <div className="mx-auto flex max-w-3xl items-center gap-3 px-6 py-4">
+          {/* Logo: ícono de huellas dentro de un cuadrito teal */}
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-teal-600 text-white shadow-sm">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="22"
+              height="22"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+              <path d="M4 16v-2.38C4 11.5 2.97 10.5 3 8c.03-2.72 1.49-6 4.5-6C9.37 2 10 3.8 10 5.5c0 3.11-2 5.66-2 8.68V16a2 2 0 1 1-4 0Z" />
+              <path d="M20 20v-2.38c0-2.12 1.03-3.12 1-5.62-.03-2.72-1.49-6-4.5-6C14.63 6 14 7.8 14 9.5c0 3.11 2 5.66 2 8.68V20a2 2 0 1 0 4 0Z" />
+              <path d="M16 17h4" />
+              <path d="M4 13h4" />
+            </svg>
+          </div>
+          <div>
+            <h1 className="text-base font-semibold tracking-tight text-slate-800">
+              Analizador de Huella Plantar
+            </h1>
+            <p className="text-xs text-slate-500">
+              Asistente clínico de clasificación podológica
+            </p>
+          </div>
+        </div>
+      </header>
+
+      {/* --- Contenido principal --- */}
+      <main className="mx-auto w-full max-w-3xl flex-1 px-6 py-10 sm:py-14">
+        <div className="mb-8 text-center sm:text-left">
+          <h2 className="text-2xl font-bold tracking-tight text-slate-800 sm:text-3xl">
+            Clasificá el tipo de pie en segundos
+          </h2>
+          <p className="mt-2 max-w-xl text-slate-600">
+            Subí una imagen de la huella tomada con podoscopio y obtené una
+            clasificación (plano, normal o cavo) junto con un breve informe en
+            lenguaje clínico.
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+
+        <AnalizadorHuella />
       </main>
+
+      {/* --- Pie de página --- */}
+      <footer className="border-t border-slate-200 py-6">
+        <p className="mx-auto max-w-3xl px-6 text-center text-xs text-slate-400">
+          Herramienta de apoyo diagnóstico. No reemplaza el criterio
+          profesional.
+        </p>
+      </footer>
     </div>
   );
 }
