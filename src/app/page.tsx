@@ -1,40 +1,43 @@
 import AnalizadorHuella from "@/components/AnalizadorHuella";
+import CerrarSesion from "@/components/CerrarSesion";
+import MarcaIcono from "@/components/MarcaIcono";
+import { createClient } from "@/utils/supabase/server";
 
-// Página principal (ruta "/"). Es un Server Component: arma la estructura
-// visual y monta adentro el componente interactivo AnalizadorHuella.
-export default function Home() {
+// Página principal (ruta "/"). Está protegida por el middleware: si no hay
+// sesión, el usuario es redirigido a /login antes de llegar acá.
+export default async function Home() {
+  // Obtenemos el usuario logueado desde el servidor (para mostrar su email).
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
   return (
     <div className="flex min-h-screen flex-col bg-slate-50">
       {/* --- Encabezado fijo arriba --- */}
       <header className="sticky top-0 z-10 border-b border-slate-200 bg-white/80 backdrop-blur">
-        <div className="mx-auto flex max-w-3xl items-center gap-3 px-6 py-4">
-          {/* Logo: ícono de huellas dentro de un cuadrito teal */}
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-teal-600 text-white shadow-sm">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="22"
-              height="22"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden="true"
-            >
-              <path d="M4 16v-2.38C4 11.5 2.97 10.5 3 8c.03-2.72 1.49-6 4.5-6C9.37 2 10 3.8 10 5.5c0 3.11-2 5.66-2 8.68V16a2 2 0 1 1-4 0Z" />
-              <path d="M20 20v-2.38c0-2.12 1.03-3.12 1-5.62-.03-2.72-1.49-6-4.5-6C14.63 6 14 7.8 14 9.5c0 3.11 2 5.66 2 8.68V20a2 2 0 1 0 4 0Z" />
-              <path d="M16 17h4" />
-              <path d="M4 13h4" />
-            </svg>
+        <div className="mx-auto flex max-w-3xl items-center justify-between gap-3 px-6 py-4">
+          {/* Izquierda: logo + nombre */}
+          <div className="flex items-center gap-3">
+            <MarcaIcono />
+            <div>
+              <h1 className="text-base font-semibold tracking-tight text-slate-800">
+                Analizador de Huella Plantar
+              </h1>
+              <p className="text-xs text-slate-500">
+                Asistente clínico de clasificación podológica
+              </p>
+            </div>
           </div>
-          <div>
-            <h1 className="text-base font-semibold tracking-tight text-slate-800">
-              Analizador de Huella Plantar
-            </h1>
-            <p className="text-xs text-slate-500">
-              Asistente clínico de clasificación podológica
-            </p>
+
+          {/* Derecha: email del profesional + cerrar sesión */}
+          <div className="flex items-center gap-3">
+            {user?.email && (
+              <span className="hidden text-xs text-slate-500 sm:inline">
+                {user.email}
+              </span>
+            )}
+            <CerrarSesion />
           </div>
         </div>
       </header>
